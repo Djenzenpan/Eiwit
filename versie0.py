@@ -3,15 +3,16 @@ from sys import argv
 def main():
     # checks whether program is used correctly
     check()
-    # creates field for protein to fold in
-    field = createfield()
+    proteinsequence = argv[1]
+    # creates field for protein to fold in and remembers middle of field
+    field, middle = createfield(proteinsequence)
     # prints field
+    field[middle][middle] = proteinsequence[0]
+    field[middle + 1][middle] = proteinsequence[1]
     for line in field:
         print(line)
     # print(check_all_options(field))
     #
-
-
 
 def check():
     if len(argv) != 2:
@@ -20,11 +21,11 @@ def check():
         if aminoacid != 'H' and aminoacid != 'P':
             exit("Protein sequence can only contain P and H")
 
-def createfield():
-    proteinsequence = argv[1]
+def createfield(proteinsequence):
     dimension = len(proteinsequence) * 2 - 1
-    field = [[0] * dimension for i in range(dimension)]
-    return field
+    print(dimension)
+    field = [["O"] * dimension for i in range(dimension)]
+    return field, (int((dimension-1)/2))
 
 
 if __name__ == '__main__':
