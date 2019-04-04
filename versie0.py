@@ -16,7 +16,7 @@ def main():
         protein.current_option[6] = "down"
     # checks whether current option is better than all previous ones
     protein.check_option()
-    # prints best_fold_points and best_fold and best field
+    # prints best_fold_points and best_fold and current field
     print(protein.best_fold_points)
     print(protein.best_fold)
     for line in protein.field:

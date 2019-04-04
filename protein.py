@@ -11,7 +11,7 @@ class Protein(object):
         self.best_fold_points = 0
         self.best_fold = None
 
-    """ creates a field based on the current_option"""
+    """ creates field based on the current_option"""
     def create_field(self, x, y):
         for aminoacid, option in zip(self.sequence[2:], range(len(self.current_option))):
            if self.current_option[option] == "right":
