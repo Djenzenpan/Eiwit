@@ -8,11 +8,12 @@ def main():
     field, middle = createfield(proteinsequence)
     # initialises first aminoacid in the middle of field and the second
     # aminoacid directly below the middle
-    field[middle][middle] = proteinsequence[0]
-    field[middle + 1][middle] = proteinsequence[1]
+    print(middle)
+    field[middle - 1][middle] = proteinsequence[0]
+    field[middle][middle] = proteinsequence[1]
     # remembers x and y coordinates of current aminoacid
     x = middle
-    y = middle + 1
+    y = middle
     for aminoacid in proteinsequence[2:]:
         if field[y+1][x] == "O":
             field[y+1][x] = aminoacid
@@ -35,7 +36,7 @@ def check():
             exit("Protein sequence can only contain P and H")
 
 def createfield(proteinsequence):
-    dimension = len(proteinsequence) * 2 - 1
+    dimension = len(proteinsequence) * 2 - 3
     field = [["O"] * dimension for i in range(dimension)]
     return field, (int((dimension-1)/2))
 
