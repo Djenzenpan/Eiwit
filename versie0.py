@@ -1,30 +1,34 @@
 from sys import argv
+from protein import Protein
 
 def main():
     # checks whether program is used correctly
     check()
-    # creates field for protein to fold in and remembers middle of field
-    proteinsequence = argv[1]
-    field, middle = createfield(proteinsequence)
-    # initialises first aminoacid in the middle of field and the second
-    # aminoacid directly below the middle
-    print(middle)
-    field[middle - 1][middle] = proteinsequence[0]
-    field[middle][middle] = proteinsequence[1]
-    # remembers x and y coordinates of current aminoacid
-    x = middle
-    y = middle
-    for aminoacid in proteinsequence[2:]:
-        if field[y+1][x] == "O":
-            field[y+1][x] = aminoacid
-            y = y+1
-        elif field[y][x+1] == "O":
-            field[y][x+1] = aminoacid
-            x = x+1
+    # makes user input into the protein class
+    protein = Protein(argv[1])
+    # initialises first aminoacid directly above the middle of the field and
+    # the second aminoacid in the middle of the field
+    protein.field[protein.length - 1][protein.length - 1] = protein.sequence[0]
+    protein.field[protein.length][protein.length - 1] = protein.sequence[1]
+    #
     # TODO
-    # check_all_options(field)
+    # protein.check_best
+    #
+    # remembers x and y coordinates of current aminoacid
+    x = protein.length - 1
+    y = protein.length
+
+    ### configures protein to go down in a straight line
+#    for aminoacid in protein.sequence[2:]:
+#        if protein.field[y+1][x] == "_":
+#            protein.field[y+1][x] = aminoacid
+#            y = y+1
+#        elif protein.field[y][x+1] == "_":
+#            protein.field[y][x+1] = aminoacid
+#            x = x+1
+
     # prints field
-    for line in field:
+    for line in protein.field:
         print(line)
 
 
@@ -34,11 +38,6 @@ def check():
     for aminoacid in argv[1]:
         if aminoacid != 'H' and aminoacid != 'P':
             exit("Protein sequence can only contain P and H")
-
-def createfield(proteinsequence):
-    dimension = len(proteinsequence) * 2 - 3
-    field = [["O"] * dimension for i in range(dimension)]
-    return field, (int((dimension-1)/2))
 
 
 if __name__ == '__main__':
