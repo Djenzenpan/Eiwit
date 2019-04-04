@@ -3,16 +3,29 @@ from sys import argv
 def main():
     # checks whether program is used correctly
     check()
-    proteinsequence = argv[1]
     # creates field for protein to fold in and remembers middle of field
+    proteinsequence = argv[1]
     field, middle = createfield(proteinsequence)
-    # prints field
+    # initialises first aminoacid in the middle of field and the second
+    # aminoacid directly below the middle
     field[middle][middle] = proteinsequence[0]
     field[middle + 1][middle] = proteinsequence[1]
+    # remembers x and y coordinates of current aminoacid
+    x = middle
+    y = middle + 1
+    for aminoacid in proteinsequence[2:]:
+        if field[y+1][x] == "O":
+            field[y+1][x] = aminoacid
+            y = y+1
+        elif field[y][x+1] == "O":
+            field[y][x+1] = aminoacid
+            x = x+1
+    # TODO
+    # check_all_options(field)
+    # prints field
     for line in field:
         print(line)
-    # print(check_all_options(field))
-    #
+
 
 def check():
     if len(argv) != 2:
@@ -23,7 +36,6 @@ def check():
 
 def createfield(proteinsequence):
     dimension = len(proteinsequence) * 2 - 1
-    print(dimension)
     field = [["O"] * dimension for i in range(dimension)]
     return field, (int((dimension-1)/2))
 
